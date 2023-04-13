@@ -1,0 +1,107 @@
+.container{
+    /* border: 1px solid red; */
+    height: 99.9vh;
+    width: 20%;
+    padding: .5em;
+    overflow: hidden;
+    background-color: rgb(48, 48, 233);
+}
+
+.title_link{
+    /* border: 1px solid red; */
+    color: white;
+    font-size: 1.3rem;
+    display: inline-block;
+    margin-top: 1.5em;
+    margin-left: 1em;
+    text-decoration: none;
+}
+
+.academicLinks{
+    /* border: 1px solid red; */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+
+}
+
+.academicLinks p{
+    font-size: .8rem;
+}
+
+.academicLinks a{
+    /* border: 1px solid red; */
+    color: white;
+    display: inline-block;
+    margin-top: 1em;
+    text-decoration: none;
+}
+
+.sidebar_link{
+    display: inline-block;
+    display: flex;
+    color: #fff;
+    gap: .5em;
+    font-family: 'Poppins';
+    margin-top: 2em;
+    text-decoration: none;
+}
+
+.sidebar_icon{
+    font-size: 2.5rem;
+}
+
+.sidebar_text{
+    font-size: 1.1rem;
+    margin-top: .5em;
+}
+
+.academic_links{
+    margin-left: .3em;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.academic_links:hover{
+    color: #fff;
+}
+
+.sidebar_link:hover{
+    color: #fff;
+}
+
+.span{
+    margin-left: .5em;
+    font-size: .9em;
+    font-family: 'Poppins';
+}
+
+.academic_para{
+    color: #fff;
+    margin-left: .5em;
+    font-family: 'Poppins';
+    margin-top: 1.5em;
+}
+
+.accordion{
+    background-color: rgb(48, 48, 233) !important;
+    font-family: 'Poppins';
+    
+}
+
+.facog{
+    margin-right: .5em;
+}
+
+.accordion_body{
+    /* border: 1px solid red; */
+    display: flex;
+    flex-direction: column;
+}
+
+.accordion_link:hover{
+    color: white;
+}
+

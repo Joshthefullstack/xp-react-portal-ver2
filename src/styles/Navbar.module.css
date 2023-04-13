@@ -1,0 +1,28 @@
+.container{
+    /* border: 1px solid red; */
+    width: 86vw;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: -1px 3px 23px -1px rgba(0,0,0,0.62);
+    -webkit-box-shadow: -1px 3px 23px -1px rgba(0,0,0,0.62);
+    -moz-box-shadow: -1px 3px 23px -1px rgba(0,0,0,0.62);
+    margin-bottom: 2em;
+    padding: .5em;
+    font-family: 'Poppins';
+}
+
+.container input{
+    padding: .2em;
+    font-family: 'Poppins';
+    width: 80%;
+}
+
+.container button{
+    padding: .3em 1em;
+    background-color: rgb(48, 48, 233);
+    color: #fff;
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    margin: 0;
+}
