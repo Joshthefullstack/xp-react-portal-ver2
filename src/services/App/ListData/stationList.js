@@ -1,26 +1,6 @@
-let Faculties = [
-    {
-        faculty_id: 1,
-        faculty_name: "Faculty of Management Sciences",
-        faculty_code: "MSA201",
-        faculty_uniqueid: "MSA2023",
-        faculty_status: 1
-    },
-    {
-        faculty_id: 2,
-        faculty_name: "Faculty of Engineering",
-        faculty_code: "ENG201",
-        faculty_uniqueid: "ENG2023",
-        faculty_status: 0
-    },
-    {
-        faculty_id: 3,
-        faculty_name: "Faculty of Medical Sciences",
-        faculty_code: "MED201",
-        faculty_uniqueid: "MED2023",
-        faculty_status: 0
-    }
-]
+import {Departments} from "../AppData/academicList";
+import { XPCrudType } from "../../../utils/Common/Enums/alertEnums";
+import { Faculties } from "../AppData/academicList";
 
 export const formInit = {
     faculty_id: 0,
@@ -44,9 +24,40 @@ export const toStatObj = (formVal) => {
     return{
         faculty_id: formVal.faculty_id,
         faculty_name: formVal.faculty_name,
-        faculty_uniqueid: formVal.uniqueid,
-        faculty_code: formVal.code,
+        faculty_uniqueid: formVal.faculty_uniqueid,
+        faculty_code: formVal.faculty_code,
         faculty_status: formVal.faculty_status
+    }
+}
+
+export const depsformInit = {
+    faculty_id: 0,
+    department_id: 0,
+    department_name: "",
+    department_uniqueid: "",
+    department_code: "",
+    department_status: 0
+}
+
+export const depstoStatObj = (formVal) => {
+    return{
+        faculty_id: formVal.faculty_id,
+        department_id: formVal.department_id,
+        department_name: formVal.department_name,
+        department_uniqueid: formVal.department_uniqueid,
+        department_code: formVal.department_code,
+        department_status: formVal.department_status
+    }
+}
+
+export const depstoFormVal = (department) => {
+    return {
+        faculty_id: department.faculty_id,
+        department_id: department.department_id,
+        department_name: department.department_name,
+        department_uniqueid: department.department_uniqueid,
+        department_code: department.department_code,
+        department_status: department.department_status
     }
 }
 
@@ -54,21 +65,72 @@ export const getAllFaculties = () => {
     return Faculties;
 }
 
-export const addFaculties = (form, faculties) => {
-    form.faculty_id = faculties.length + 1;
-    faculties.push(form)
+export const getAllDepartments = () => {
+    return Departments;
 }
 
-export const editFaculties = (facult, setFacult, faculties, form) => {
-    setFacult(facult = faculties.find(m => m.faculty_id === form.faculty_id))
-    const index = faculties.indexOf(facult);
-    faculties.splice(index, 1)
-    setFacult(facult = form);
-    faculties.splice(index, 0, facult)
+let searchData = null;
+
+export const getSearchData = () => {
+    return searchData
 }
 
-export const deleteFaculties = (faculty, faculties, facult, setFacult) => {
-    setFacult(facult = faculties.find(m => m.faculty_id === faculty.faculty_id))
-    const index = faculties.indexOf(facult);
-    faculties.splice(index, 1)
+
+export const isFacultyDuplicate = (faculty) => {
+    let error = "";
+    let item = "";
+    const dupName = Faculties.filter((f)=>f.faculty_name.toLowerCase() === faculty.faculty_name.toLowerCase());
+
+    if((faculty.faculty_id === 0 && dupName.length > 0) || (faculty.faculty_id > 0 && dupName.length > 1)){
+        error = "Faculty Name already exists";
+        item = "name";
+        return { status: true, error, item };
+    }
+
+    const dupCode = Faculties.filter((f) => f.faculty_code.toLowerCase() === faculty.faculty_code.toLowerCase())
+    
+    if((faculty.faculty_id === 0 && dupCode.length > 0) || (faculty.faculty_id > 0 && dupCode.length > 1)){
+        error = "Faculty code already exists";
+        item = "code";
+        return { status: true, error, item };
+    }
+
+    const dupUniqueId = Faculties.filter((f) => f.faculty_uniqueid.toLowerCase() === faculty.faculty_uniqueid.toLowerCase());
+
+    if((faculty.faculty_id === 0 && dupUniqueId.length > 0) || (faculty.faculty_uniqueid > 0 && dupUniqueId.length > 1)){
+        error = "Faculty Unique Id already exists";
+        item = "uniqueid";
+        return { status: true, error, item };
+    }
+    return { status: false, error, item };
+}
+
+
+export const isDepartmentDuplicate = (department) => {
+    let error = "";
+    let item = "";
+    const dupName = Departments.filter((f)=>f.department_name.toLowerCase() === department.department_name.toLowerCase());
+
+    if((department.department_id === 0 && dupName.length > 0) || (department.department_id > 0 && dupName.length > 1)){
+        error = "Department Name already exists";
+        item = "name";
+        return { status: true, error, item };
+    }
+
+    const dupCode = Departments.filter((f) => f.department_code.toLowerCase() === department.department_code.toLowerCase())
+    
+    if((department.department_id === 0 && dupCode.length > 0) || (department.department_id > 0 && dupCode.length > 1)){
+        error = "Department code already exists";
+        item = "code";
+        return { status: true, error, item };
+    }
+
+    const dupUniqueId = Departments.filter((f) => f.department_uniqueid.toLowerCase() === department.department_uniqueid.toLowerCase());
+
+    if((department.department_id === 0 && dupUniqueId.length > 0) || (department.department_id > 0 && dupUniqueId.length > 1)){
+        error = "Department Unique Id already exists";
+        item = "uniqueid";
+        return { status: true, error, item };
+    }
+    return { status: false, error, item };
 }

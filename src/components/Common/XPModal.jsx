@@ -1,28 +1,27 @@
-import React from 'react'
-import { Modal, Button } from 'react-bootstrap';
+import React, { useState } from 'react'
+import { Modal } from 'react-bootstrap';
+
+
+export const useXPModal = () => {
+    const [show, setShow] = useState(false);
+
+    const toggleShow = () => setShow(!show);
+    return { show, toggleShow }
+}
+
 
 function XPModal({
     show,
-    handleShow,
-    handleClose,
-    facultyForm,
+    onClose,
     modalTitle,
-    submitForm
+    children
 }) {
   return (
-    <Modal show={show} onHide={handleClose}>
+    <Modal show={show} onHide={onClose}>
         <Modal.Header closeButton>
           <Modal.Title>{modalTitle}</Modal.Title>
         </Modal.Header>
-        <Modal.Body>{facultyForm}</Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={submitForm}>
-            Submit
-          </Button>
-        </Modal.Footer>
+        <Modal.Body>{children}</Modal.Body>
       </Modal>
   )
 }

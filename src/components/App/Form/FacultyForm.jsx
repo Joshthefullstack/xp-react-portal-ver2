@@ -1,70 +1,63 @@
 import { React, useState } from "react";
-import { Form } from "react-bootstrap";
+import { Form, Button } from "react-bootstrap";
+import { XPAlertObj, XPInfoAlert } from "../../../utils/Common/xpAlerts";
+import { XPCrudType } from "../../../utils/Common/Enums/alertEnums";
+import { formInit } from '../../../services/App/ListData/stationList';
+import {  isFacultyDuplicate } from "../../../services/App/ListData/stationList";
+import { useFacDispatchContext } from "../FacultyItems/FacultyProvider";
+import { useFacContext } from "../FacultyItems/FacultyProvider";
+import { useFacultyForm } from "../FacultyItems/FacultyHook";
 
-export const useStateForm = ({ frm }) => {
-  const [form, setForm] = useState(frm);
-  const [errors, setErrors] = useState({});
 
-  const handleValueChange = (e) => {
-    if (e.target.type === "checkbox") {
-      if (form[e.target.name] === false) {
-        form[e.target.name] = true;
-      } else if (form[e.target.name] === true) {
-        form[e.target.name] = false;
-      } else {
-        form[e.target.name] = true;
-      }
-      setForm({ ...form });
-    } else {
-      setForm({ ...form, [e.target.name]: e.target.value });
+export const FacultyForm = ({ onToggleModal, formObj }) => {
+  let [duplicateError, setDuplicateError] = useState("");
+  const { form, handleValueChange, errors, setErrors, validateForm, initForm } = useFacultyForm({ formObj });
+
+  const dispatch = useFacDispatchContext();
+  const facs = useFacContext();
+  
+  const onSubmitForm = (e) => {
+    e.preventDefault();
+    const alertObj = XPAlertObj();
+
+    alertObj.icon = "success";
+
+    const newErrors = validateForm();
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors);
+      return false;
     }
 
-    if (!!errors[e.target.name])
-      setErrors({
-        ...errors,
-        [e.target.name]: null,
-      });
-  };
+    const dupValue = isFacultyDuplicate(form);
+    if(dupValue.status){
+      setDuplicateError(dupValue.error);
+      return false;
+    }
 
-  const validateForm = () => {
-    const { faculty_name, faculty_code, faculty_uniqueid } = form;
-    const newErrors = {};
+    try{
+      if(form.faculty_id > 0){
+        dispatch({ type: XPCrudType.byType(XPCrudType.Update), fac: form }); 
+        alertObj.message = "Faculty was updated successfully";
+        alertObj.title = "Faculty updated successfully";
+        alertObj.callback = onToggleModal;
+        XPInfoAlert(alertObj)
+      } else{
+        form.faculty_id = facs.length + 1;
+        dispatch({ type: XPCrudType.byType(XPCrudType.Add), fac: form });   
+        alertObj.message = "Faculty was Added Successfully";
+        alertObj.title = "Faculty Added";
+        XPInfoAlert(alertObj)
+      }
+    } catch(error){
+      console.log(error)
+    }
 
-    if (!faculty_name || faculty_name === "")
-    newErrors.faculty_name = "Kindly Supply Faculty Name!";
-  else if (faculty_name.length < 3)
-    newErrors.faculty_name = "Faculty Name is too short!";
-  else if (faculty_name.length > 70)
-    newErrors.faculty_name = "Faculty Name is too long!";
-
-    if (!faculty_code || faculty_code === "")
-    newErrors.faculty_code = "Kindly Supply Faculty Code!";
-  else if (faculty_code.length < 3)
-    newErrors.faculty_code = "Faculty Code is too short!";
-  else if (faculty_code.length > 10)
-    newErrors.faculty_code = "Faculty Code is too long!";
-
-    if (!faculty_uniqueid || faculty_uniqueid === "")
-    newErrors.faculty_uniqueid = "Kindly Supply Faculty Unique Id!";
-  else if (faculty_uniqueid.length < 3)
-    newErrors.faculty_uniqueid = "Faculty Unique Id is too short!";
-  else if (faculty_uniqueid.length > 10)
-    newErrors.faculty_uniqueid = "Faculty Unique Id is too long!";
-
-    return newErrors;
+    initForm(formInit);
   }
-
-  const initForm = (form) => {
-    setForm(form)
-  }
-
-  return { handleValueChange, form, initForm, validateForm, errors, setErrors };
-};
-
-export const FacultyForm = ({ handleValueChange, form, errors }) => {
 
   return (
     <Form>
+      <p>{duplicateError}</p>
       <input
         type="hidden"
         id="faculty_id"
@@ -124,13 +117,16 @@ export const FacultyForm = ({ handleValueChange, form, errors }) => {
         <Form.Check
           type="checkbox"
           name="faculty_status"
-          checked={form.stat_active}
+          checked={form.faculty_active}
           onChange={(e) => {
             handleValueChange(e);
           }}
           label="Is Active?"
         />
       </Form.Group>
+      <Button variant="secondary" className="mt-2" onClick={(e)=>{onSubmitForm(e)}}>
+        Submit
+      </Button>
     </Form>
   );
 };
