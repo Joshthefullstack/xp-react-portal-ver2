@@ -1,7 +1,7 @@
 import { createContext, useReducer, useContext } from "react";
 import { getAllFaculties } from "../../../services/App/ListData/stationList";
 import { XPCrudType } from "../../../utils/Common/Enums/alertEnums";
-
+import { isDuplicate } from "../../Utils/Helper";
 
 const FacContext = createContext(null);
 const FacDispatchContext = createContext(null);
@@ -25,39 +25,31 @@ export const action = {
 
 function facultyReducer(facs, action) {
     const faculty = action.fac;
+    const retVal=isDuplicate.isFacultyDuplicate(faculty, facs)
     switch (action.type) {
         case XPCrudType.byType(XPCrudType.Add): {
             // validate fas
-            if (faculty !== null || faculty.faculty_id === 0) {
-                return [...facs, faculty]
-            }
-            return false;
+            if (!retVal.status) return facs
+            return [...facs, faculty]
         }
         case XPCrudType.byType(XPCrudType.Update): {
             // validate fac
-            if (faculty !== null || faculty.faculty_id > 0) {
-                const index = facs.findIndex((m) => m.faculty_id === faculty.faculty_id);
-                if (index !== -1) {
-                    facs[index] = faculty;
-                }
-                return [...facs]
+            if (!retVal.status) return facs
+            const index = facs.findIndex((m) => m.faculty_id === faculty.faculty_id);
+            if (index !== -1) {
+                facs[index] = faculty;
             }
-            return false;
+            return [...facs]
         }
         case XPCrudType.byType(XPCrudType.Delete):
             // validate facs
-            if (faculty !== null || faculty.faculty_id) {
-                facs = facs.filter((m) => m.faculty_id !== faculty.faculty_id);
-                return [...facs];
-            }
-            return false;
+            if (!retVal.status) return facs
+            facs = facs.filter((m) => m.faculty_id !== faculty.faculty_id);
+            return [...facs];
         default:
-            throw new Error()
+            return facs
     }
 }
-
-// COME AND START WORKING ON THE SEARCH
-
 
 export const useFacContext = () => useContext(FacContext);
 export const useFacDispatchContext = () => useContext(FacDispatchContext)

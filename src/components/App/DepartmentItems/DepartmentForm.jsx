@@ -4,9 +4,10 @@ import { XPAlertObj, XPInfoAlert } from "../../../utils/Common/xpAlerts";
 import { XPCrudType } from "../../../utils/Common/Enums/alertEnums";
 import { depsformInit } from '../../../services/App/ListData/stationList';
 import {  isDepartmentDuplicate } from "../../../services/App/ListData/stationList";
-import { useDepDispatchContext, useFacContext } from "../DepartmentItems/DepartmentProvider";
-import { useDepContext } from "../DepartmentItems/DepartmentProvider";
-import { useDepartmentForm } from "../DepartmentItems/DepartmentHook";
+import { useDepDispatchContext, useFacContext } from "./DepartmentProvider";
+import { useDepContext } from "./DepartmentProvider";
+import { useDepartmentForm } from "./DepartmentHook";
+import { isDuplicate } from '../../Utils/Helper';
 
 function DepartmentForm({ onToggleModal, formObj }) {
   let [duplicateError, setDuplicateError] = useState("");
@@ -29,30 +30,30 @@ function DepartmentForm({ onToggleModal, formObj }) {
       return false;
     }
 
-    const dupValue = isDepartmentDuplicate(form);
+    const dupValue = isDuplicate.isDepartmentDuplicate(form, deps);
     if(dupValue.status){
       setDuplicateError(dupValue.error);
       return false;
     }
 
-    try{
-      if(form.department_id > 0){
-        dispatch({ type: XPCrudType.byType(XPCrudType.Update), dep: form }); 
+    let faculty_id = Number(form.faculty_id);
+    let modForm = {...form, faculty_id}
+
+  
+      if(modForm.department_id > 0){
+        dispatch({ type: XPCrudType.byType(XPCrudType.Update), dep: modForm }); 
         alertObj.message = "Department was updated successfully";
         alertObj.title = "Department updated successfully";
         alertObj.callback = onToggleModal;
         XPInfoAlert(alertObj)
       } else{
-        form.department_id = deps.length + 1;
-        dispatch({ type: XPCrudType.byType(XPCrudType.Add), dep: form });   
-        alertObj.message = "Faculty was Added Successfully";
-        alertObj.title = "Faculty Added";
+        modForm.department_id = deps.length + 1;
+        dispatch({ type: XPCrudType.byType(XPCrudType.Add), dep: modForm });   
+        alertObj.message = "Department was Added Successfully";
+        alertObj.title = "Department Added";
         XPInfoAlert(alertObj)
       }
-    } catch(error){
-      console.log(error)
-    }
-
+      
     initForm(depsformInit);
   }
 
@@ -67,7 +68,7 @@ function DepartmentForm({ onToggleModal, formObj }) {
         onChange={handleValueChange}
       />
       <Form.Group controlId="stName" className="mb-2">
-          <Form.Select aria-label="Faculty Id" type="select" name="faculty_id" value={form.faculty_id} onChange={(e)=>{handleValueChange(e)}}>
+          <Form.Select aria-label="Faculty Id" type="select" name="faculty_id" value={form.faculty_id} onChange={(e)=>{handleValueChange(e)}} isInvalid={!!errors["faculty_id"]}>
               <option value="0">-- Select Faculty --</option>
               {
                 facs.map((faculty)=>{
@@ -77,6 +78,9 @@ function DepartmentForm({ onToggleModal, formObj }) {
                 })
               }
         </Form.Select>
+        <Form.Control.Feedback type="invalid">
+          {errors["faculty_id"]}
+        </Form.Control.Feedback>
       </Form.Group>
       <Form.Group controlId="stName" className="mb-2">
         <Form.Label>Department Name</Form.Label>

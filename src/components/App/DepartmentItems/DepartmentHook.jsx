@@ -23,8 +23,12 @@ export const useDepartmentForm = ({ formObj }) => {
     };
   
     const validateForm = () => {
-      const { department_name, department_code, department_uniqueid } = form;
+      const { faculty_id, department_name, department_code, department_uniqueid } = form;
       const newErrors = {};
+
+      if(!faculty_id || faculty_id === 0){
+        newErrors.faculty_id = "Kindly Supply a Valid Faculty"
+      }
   
       if (!department_name || department_name === "")
       newErrors.department_name = "Kindly Supply Department Name!";

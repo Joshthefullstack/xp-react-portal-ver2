@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import XPModal, { useXPModal } from '../../Common/XPModal';
 import { depsformInit } from '../../../services/App/ListData/stationList';
 import DepartmentProvider from '../DepartmentItems/DepartmentProvider';
-import DepartmentForm from '../Form/DepartmentForm';
+import DepartmentForm from '../DepartmentItems/DepartmentForm';
 import DepartmentGrid from '../DepartmentItems/DepartmentGrid';
-import DepartmentTable from '../Table/DepartmentTable';
+import DepartmentTable from '../DepartmentItems/DepartmentTable';
 
 
 function Department() {

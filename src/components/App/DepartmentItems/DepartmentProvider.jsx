@@ -1,7 +1,7 @@
 import React, { createContext, useReducer, useContext } from 'react';
-import { getAllDepartments } from '../../../services/App/ListData/stationList';
-import { getAllFaculties } from '../../../services/App/ListData/stationList';
+import { getAllDepartments, getAllFaculties } from '../../../services/App/ListData/stationList';
 import { XPCrudType } from '../../../utils/Common/Enums/alertEnums';
+import { isDuplicate } from "../../Utils/Helper";
 
 const DepContext = createContext(null);
 const DepDispatchContext = createContext(null);
@@ -28,32 +28,24 @@ export const action = {
 
 function departmentReducer(deps, action){
     let department = action.dep;
-    let faculty_id = parseInt(department.faculty_id)
+    const retVal=isDuplicate.isDepartmentDuplicate(department, deps)
     switch(action.type){
         case XPCrudType.byType(XPCrudType.Add):
-            if(department !== null || department.department_id === 0){
-                department = {...department, faculty_id};
-                return [...deps, department]
-            }
-            return false;
+            if(!retVal.status) return deps
+            return [...deps, department]
         case XPCrudType.byType(XPCrudType.Update):
-            if(department !== null || department.department_id > 0){
-                department = {...department, faculty_id};
-                const index = deps.findIndex((m) => m.department_id === department.department_id);
-                if(index !== -1){
-                    deps[index] = department;
-                }
-                return [...deps]
+            if(!retVal.status) return deps
+            const index = deps.findIndex((m) => m.department_id === department.department_id);
+            if(index !== -1){
+                deps[index] = department;
             }
-            return false;
+            return [...deps]
         case XPCrudType.byType(XPCrudType.Delete):
-            if(department !== null || department.department_id){
-                deps = deps.filter((m)=> m.department_id !== department.department_id);
-                return [...deps];
-            }
-            return false;
+            if(!retVal.status) return deps
+            deps = deps.filter((m)=> m.department_id !== department.department_id);
+            return [...deps];
         default:
-            throw new Error();
+            return deps
     }
 }
 

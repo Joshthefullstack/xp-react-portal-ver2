@@ -3,10 +3,10 @@ import { Form, Button } from "react-bootstrap";
 import { XPAlertObj, XPInfoAlert } from "../../../utils/Common/xpAlerts";
 import { XPCrudType } from "../../../utils/Common/Enums/alertEnums";
 import { formInit } from '../../../services/App/ListData/stationList';
-import {  isFacultyDuplicate } from "../../../services/App/ListData/stationList";
-import { useFacDispatchContext } from "../FacultyItems/FacultyProvider";
-import { useFacContext } from "../FacultyItems/FacultyProvider";
-import { useFacultyForm } from "../FacultyItems/FacultyHook";
+import { useFacDispatchContext } from "./FacultyProvider";
+import { useFacContext } from "./FacultyProvider";
+import { useFacultyForm } from "./FacultyHook";
+import { isDuplicate } from "../../Utils/Helper";
 
 
 export const FacultyForm = ({ onToggleModal, formObj }) => {
@@ -28,13 +28,13 @@ export const FacultyForm = ({ onToggleModal, formObj }) => {
       return false;
     }
 
-    const dupValue = isFacultyDuplicate(form);
+    const dupValue = isDuplicate.isFacultyDuplicate(form, facs);
     if(dupValue.status){
       setDuplicateError(dupValue.error);
       return false;
     }
 
-    try{
+
       if(form.faculty_id > 0){
         dispatch({ type: XPCrudType.byType(XPCrudType.Update), fac: form }); 
         alertObj.message = "Faculty was updated successfully";
@@ -48,10 +48,7 @@ export const FacultyForm = ({ onToggleModal, formObj }) => {
         alertObj.title = "Faculty Added";
         XPInfoAlert(alertObj)
       }
-    } catch(error){
-      console.log(error)
-    }
-
+      
     initForm(formInit);
   }
 

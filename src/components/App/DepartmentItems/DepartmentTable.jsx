@@ -4,9 +4,9 @@ import { XPCrudType } from '../../../utils/Common/Enums/alertEnums';
 import { XPAlertObj, XPDeleteSuccessObj } from '../../../utils/Common/xpAlerts';
 import { FaPen } from "react-icons/fa";
 import { FaTrash } from "react-icons/fa";
-import { useDepContext } from "../DepartmentItems/DepartmentProvider";
-import { useFacContext } from "../DepartmentItems/DepartmentProvider";
-import { useDepDispatchContext } from "../DepartmentItems/DepartmentProvider";
+import { useDepContext } from "./DepartmentProvider";
+import { useFacContext } from "./DepartmentProvider";
+import { useDepDispatchContext } from "./DepartmentProvider";
 
 
 const getGridHeader = () => {

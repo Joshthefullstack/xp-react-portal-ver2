@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import FacultyTable from "../Table/FacultyTable";
+import FacultyTable from "../FacultyItems/FacultyTable";
 import FacultyGrid from "../FacultyItems/FacultyGrid";
-import { FacultyForm }  from '../Form/FacultyForm';
+import { FacultyForm }  from '../FacultyItems/FacultyForm';
 import XPModal, { useXPModal } from '../../Common/XPModal';
 import { formInit } from '../../../services/App/ListData/stationList';
 import FacultyProvider from '../FacultyItems/FacultyProvider';

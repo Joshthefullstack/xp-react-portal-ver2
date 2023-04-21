@@ -1,103 +1,271 @@
-
 export let Faculties = [
-    {
-        faculty_id: 1,
-        faculty_name: "Faculty of Management Sciences",
-        faculty_code: "MSA201",
-        faculty_uniqueid: "MSA2023",
-        faculty_status: 1
-    },
-    {
-        faculty_id: 2,
-        faculty_name: "Faculty of Engineering",
-        faculty_code: "ENG201",
-        faculty_uniqueid: "ENG2023",
-        faculty_status: 0
-    },
-    {
-        faculty_id: 3,
-        faculty_name: "Faculty of Medical Sciences",
-        faculty_code: "MED201",
-        faculty_uniqueid: "MED2023",
-        faculty_status: 0
-    },
-    {
-        faculty_id: 4,
-        faculty_name: "Faculty of Arts",
-        faculty_code: "ART201",
-        faculty_uniqueid: "ART2023",
-        faculty_status: 1
-    }, 
-    {
-        faculty_id: 5,
-        faculty_name: "Faculty of Enviromental Sciences",
-        faculty_code: "ENV201",
-        faculty_uniqueid: "ENV2023",
-        faculty_status: 1
-    }, 
-    {
-        faculty_id: 6,
-        faculty_name: "Faculty of Education",
-        faculty_code: "EDU201",
-        faculty_uniqueid: "EDU2023",
-        faculty_status: 0
-    },
-    {
-        faculty_id: 7,
-        faculty_name: "Faculty of Mass Communication",
-        faculty_code: "MCO201",
-        faculty_uniqueid: "MCO2023",
-        faculty_status: 0
-    }
+  {
+    faculty_id: 1,
+    faculty_name: "Faculty of Management Sciences",
+    faculty_code: "MSA201",
+    faculty_uniqueid: "MSA2023",
+    faculty_status: 1,
+  },
+  {
+    faculty_id: 2,
+    faculty_name: "Faculty of Engineering",
+    faculty_code: "ENG201",
+    faculty_uniqueid: "ENG2023",
+    faculty_status: 0,
+  },
+  {
+    faculty_id: 3,
+    faculty_name: "Faculty of Medical Sciences",
+    faculty_code: "MED201",
+    faculty_uniqueid: "MED2023",
+    faculty_status: 0,
+  },
+  {
+    faculty_id: 4,
+    faculty_name: "Faculty of Arts",
+    faculty_code: "ART201",
+    faculty_uniqueid: "ART2023",
+    faculty_status: 1,
+  },
+  {
+    faculty_id: 5,
+    faculty_name: "Faculty of Enviromental Sciences",
+    faculty_code: "ENV201",
+    faculty_uniqueid: "ENV2023",
+    faculty_status: 1,
+  },
+  {
+    faculty_id: 6,
+    faculty_name: "Faculty of Education",
+    faculty_code: "EDU201",
+    faculty_uniqueid: "EDU2023",
+    faculty_status: 0,
+  },
+  {
+    faculty_id: 7,
+    faculty_name: "Faculty of Mass Communication",
+    faculty_code: "MCO201",
+    faculty_uniqueid: "MCO2023",
+    faculty_status: 0,
+  },
 ];
 
 export let Departments = [
-    {
-        faculty_id: 1,
-        department_id: 1,
-        department_name: "Department of Accounting",
-        department_code: "ACC",
-        department_uniqueid: "ACC2023",
-        department_status: 1
-    },
-    {
-        faculty_id: 1,
-        department_id: 2,
-        department_name: "Department of Actuarial Science",
-        department_code: "ACS",
-        department_uniqueid: "ACS2023",
-        department_status: 1
-    },
-    {
-        faculty_id: 6,
-        department_id: 3,
-        department_name: "Department of Adult Education",
-        department_code: "ADE",
-        department_uniqueid: "ADE2023",
-        department_status: 0
-    },
-    {    
-        faculty_id: 4,
-        department_id: 4,
-        department_name: "Department of Philosophy",
-        department_code: "PHI",
-        department_uniqueid: "PHI2023",
-        department_status: 0
-    },
-    {
-        faculty_id: 2,
-        department_id: 5,
-        department_name: "Department of Computer Engineering",
-        department_code: "CEN",
-        department_uniqueid: "CEN2023",
-        department_status: 1
-    },
-    {
-        faculty_id: 1,
-        department_id: 6,
-        department_name: "Department of Insurance",
-        department_code: "INS",
-        department_uniqueid: "INS2023",
-        department_status: 0
-    }
-]
+  {
+    faculty_id: 1,
+    department_id: 1,
+    department_name: "Department of Accounting",
+    department_code: "ACC",
+    department_uniqueid: "ACC2023",
+    department_status: 1,
+  },
+  {
+    faculty_id: 1,
+    department_id: 2,
+    department_name: "Department of Actuarial Science",
+    department_code: "ACS",
+    department_uniqueid: "ACS2023",
+    department_status: 1,
+  },
+  {
+    faculty_id: 6,
+    department_id: 3,
+    department_name: "Department of Adult Education",
+    department_code: "ADE",
+    department_uniqueid: "ADE2023",
+    department_status: 0,
+  },
+  {
+    faculty_id: 4,
+    department_id: 4,
+    department_name: "Department of Philosophy",
+    department_code: "PHI",
+    department_uniqueid: "PHI2023",
+    department_status: 0,
+  },
+  {
+    faculty_id: 2,
+    department_id: 5,
+    department_name: "Department of Computer Engineering",
+    department_code: "CEN",
+    department_uniqueid: "CEN2023",
+    department_status: 1,
+  },
+  {
+    faculty_id: 1,
+    department_id: 6,
+    department_name: "Department of Insurance",
+    department_code: "INS",
+    department_uniqueid: "INS2023",
+    department_status: 0,
+  },
+];
+
+export let CourseOfStudy = [
+  {
+    department_id: 1,
+    courseofstudy_id: 1,
+    courseofstudy_name: "Accounting",
+    courseofstudy_shortname: "ACC",
+    courseofstudy_uniqueid: "ACC2023",
+    courseofstudy_awards: "BS.c in Accounting",
+    courseofstudy_duration: 4,
+    courseofstudy_requiredcreditunits: 40,
+    courseofstudy_advisor: "Mr. Adekunle",
+    courseofstudy_status: 0,
+  },
+  {
+    department_id: 1,
+    courseofstudy_id: 2,
+    courseofstudy_name: "Business Mathematics",
+    courseofstudy_shortname: "FBA",
+    courseofstudy_uniqueid: "FBA2023",
+    courseofstudy_awards: "BS.c in Business Mathematics",
+    courseofstudy_duration: 5,
+    courseofstudy_requiredcreditunits: 50,
+    courseofstudy_advisor: "Mr. Garri",
+    courseofstudy_status: 1,
+  },
+  {
+    department_id: 6,
+    courseofstudy_id: 3,
+    courseofstudy_name: "Estate Law",
+    courseofstudy_shortname: "ELA",
+    courseofstudy_uniqueid: "ELA2023",
+    courseofstudy_awards: "BS.c in Estate Law",
+    courseofstudy_duration: 5,
+    courseofstudy_requiredcreditunits: 34,
+    courseofstudy_advisor: "Mr. Sugar",
+    courseofstudy_status: 0,
+  },
+  {
+    department_id: 5,
+    courseofstudy_id: 4,
+    courseofstudy_name: "Javascript",
+    courseofstudy_shortname: "JSC",
+    courseofstudy_uniqueid: "JSC2023",
+    courseofstudy_awards: "BS.c in Javascript",
+    courseofstudy_duration: 6,
+    courseofstudy_requiredcreditunits: 61,
+    courseofstudy_advisor: "Mr. Groudnut",
+    courseofstudy_status: 1,
+  },
+  {
+    department_id: 3,
+    courseofstudy_id: 5,
+    courseofstudy_name: "Adult Education",
+    courseofstudy_shortname: "ADE",
+    courseofstudy_uniqueid: "ADE2023",
+    courseofstudy_awards: "BS.c in Adult Education",
+    courseofstudy_duration: 4,
+    courseofstudy_requiredcreditunits: 36,
+    courseofstudy_advisor: "Mr. Water",
+    courseofstudy_status: 1,
+  },
+];
+
+export let Course = [
+  {
+    department_id: 2,
+    course_id: 1,
+    course_name: "Engineering Maths",
+    course_code: "EMA",
+    course_uniqueid: "EMA2023",
+    course_units: 3,
+    course_level: 100,
+    course_semester: 2,
+    course_status: 0,
+  },
+  {
+    department_id: 5,
+    course_id: 2,
+    course_name: "Machine Learning",
+    course_code: "MLA",
+    course_uniqueid: "MLA2023",
+    course_units: 3,
+    course_level: 300,
+    course_semester: 1,
+    course_status: 1,
+  },
+  {
+    department_id: 6,
+    course_id: 3,
+    course_name: "Risk Management",
+    course_code: "MRM",
+    course_uniqueid: "MRM2023",
+    course_units: 4,
+    course_level: 200,
+    course_semester: 1,
+    course_status: 1,
+  },
+  {
+    department_id: 1,
+    course_id: 4,
+    course_name: "Economics",
+    course_code: "ECN",
+    course_uniqueid: "ECN2023",
+    course_units: 3,
+    course_level: 100,
+    course_semester: 2,
+    course_status: 0,
+  },
+  {
+    department_id: 5,
+    course_id: 5,
+    course_name: "Web Development",
+    course_code: "WEB",
+    course_uniqueid: "WEB2023",
+    course_units: 5,
+    course_level: 100,
+    course_semester: 2,
+    course_status: 1,
+  },
+];
+
+export let Lecturer = [
+  {
+    lecturer_id: 1,
+    department_id: 2,
+    lecturer_surname: "Ijeh",
+    lecturer_firstname: "Michael",
+    lecturer_othername: "Hoe",
+    lecturer_staffid: "09098",
+    lecturer_status: 0,
+  },
+  {
+    lecturer_id: 2,
+    department_id: 4,
+    lecturer_surname: "  Ijeh",
+    lecturer_firstname: "Jones",
+    lecturer_othername: "Jonah",
+    lecturer_staffid: "09878",
+    lecturer_status: 1,
+  },
+  {
+    lecturer_id: 3,
+    department_id: 1,
+    lecturer_surname: "Michael",
+    lecturer_firstname: "Ade",
+    lecturer_othername: "Fade",
+    lecturer_staffid: "90",
+    lecturer_status: 1,
+  },
+  {
+    lecturer_id: 4,
+    department_id: 3,
+    lecturer_surname: "Lawal",
+    lecturer_firstname: "Taiwo ",
+    lecturer_othername: "Igbaro",
+    lecturer_staffid: "456",
+    lecturer_status: 0,
+  },
+  {
+    lecturer_id: 5,
+    department_id: 1,
+    lecturer_surname: "Jide",
+    lecturer_firstname: "Michael",
+    lecturer_othername: "Playboy",
+    lecturer_staffid: "Great",
+    lecturer_status: 1,
+  }
+];

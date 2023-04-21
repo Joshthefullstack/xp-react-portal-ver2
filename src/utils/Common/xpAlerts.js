@@ -5,7 +5,7 @@ export const XPAlertObj = () => {
     title: "Item Added",
     message: "",
     icon: "",
-    infoButText: "",
+    infoButText: "OK",
     confirmButText: "Yes, Proceeed",
     cancelButText: "No",
     redirecrUrl: "",
