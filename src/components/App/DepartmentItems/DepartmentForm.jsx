@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Form, Button } from "react-bootstrap";
-import { XPAlertObj, XPInfoAlert } from "../../../utils/Common/xpAlerts";
+import { XPAlertObj, XPInfoAlert, testThis } from "../../../utils/Common/xpAlerts";
 import { XPCrudType } from "../../../utils/Common/Enums/alertEnums";
 import { depsformInit } from '../../../services/App/ListData/stationList';
 import {  isDepartmentDuplicate } from "../../../services/App/ListData/stationList";
@@ -42,15 +42,12 @@ function DepartmentForm({ onToggleModal, formObj }) {
   
       if(modForm.department_id > 0){
         dispatch({ type: XPCrudType.byType(XPCrudType.Update), dep: modForm }); 
-        alertObj.message = "Department was updated successfully";
-        alertObj.title = "Department updated successfully";
-        alertObj.callback = onToggleModal;
+        testThis(alertObj, "Department was edited successfully", "Department was edited", onToggleModal())
         XPInfoAlert(alertObj)
       } else{
         modForm.department_id = deps.length + 1;
         dispatch({ type: XPCrudType.byType(XPCrudType.Add), dep: modForm });   
-        alertObj.message = "Department was Added Successfully";
-        alertObj.title = "Department Added";
+        testThis(alertObj, "Department was added successfully", "Department was added");
         XPInfoAlert(alertObj)
       }
       

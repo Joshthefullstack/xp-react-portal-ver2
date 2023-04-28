@@ -31,17 +31,17 @@ function departmentReducer(deps, action){
     const retVal=isDuplicate.isDepartmentDuplicate(department, deps)
     switch(action.type){
         case XPCrudType.byType(XPCrudType.Add):
-            if(!retVal.status) return deps
+            if(retVal.status) return deps
             return [...deps, department]
         case XPCrudType.byType(XPCrudType.Update):
-            if(!retVal.status) return deps
+            if(retVal.status) return deps
             const index = deps.findIndex((m) => m.department_id === department.department_id);
             if(index !== -1){
                 deps[index] = department;
             }
             return [...deps]
         case XPCrudType.byType(XPCrudType.Delete):
-            if(!retVal.status) return deps
+            if(retVal.status) return deps
             deps = deps.filter((m)=> m.department_id !== department.department_id);
             return [...deps];
         default:

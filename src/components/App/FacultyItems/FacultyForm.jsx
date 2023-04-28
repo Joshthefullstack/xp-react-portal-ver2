@@ -1,6 +1,6 @@
 import { React, useState } from "react";
 import { Form, Button } from "react-bootstrap";
-import { XPAlertObj, XPInfoAlert } from "../../../utils/Common/xpAlerts";
+import { XPAlertObj, XPInfoAlert, testThis } from "../../../utils/Common/xpAlerts";
 import { XPCrudType } from "../../../utils/Common/Enums/alertEnums";
 import { formInit } from '../../../services/App/ListData/stationList';
 import { useFacDispatchContext } from "./FacultyProvider";
@@ -15,6 +15,8 @@ export const FacultyForm = ({ onToggleModal, formObj }) => {
 
   const dispatch = useFacDispatchContext();
   const facs = useFacContext();
+
+  // dispatch({type: "Add"})
   
   const onSubmitForm = (e) => {
     e.preventDefault();
@@ -37,15 +39,12 @@ export const FacultyForm = ({ onToggleModal, formObj }) => {
 
       if(form.faculty_id > 0){
         dispatch({ type: XPCrudType.byType(XPCrudType.Update), fac: form }); 
-        alertObj.message = "Faculty was updated successfully";
-        alertObj.title = "Faculty updated successfully";
-        alertObj.callback = onToggleModal;
+        testThis(alertObj, "Faculty was edited successfully", "Faculty was edited", onToggleModal())
         XPInfoAlert(alertObj)
       } else{
         form.faculty_id = facs.length + 1;
-        dispatch({ type: XPCrudType.byType(XPCrudType.Add), fac: form });   
-        alertObj.message = "Faculty was Added Successfully";
-        alertObj.title = "Faculty Added";
+        dispatch({ type: XPCrudType.byType(XPCrudType.Add), fac: form });
+        testThis(alertObj, "Faculty was added successfully", "Faculty was added")
         XPInfoAlert(alertObj)
       }
       

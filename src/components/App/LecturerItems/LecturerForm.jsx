@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { Form, Button } from "react-bootstrap";
-import { XPAlertObj, XPInfoAlert } from "../../../utils/Common/xpAlerts";
+import { XPAlertObj, XPInfoAlert, testThis } from "../../../utils/Common/xpAlerts";
 import { XPCrudType } from "../../../utils/Common/Enums/alertEnums";
 import { lecturerformInit } from '../../../services/App/ListData/stationList';
-import {  isLecturerDuplicate } from "../../../services/App/ListData/stationList";
 import { useLecturerContext, useLecturerDispatchContext, useDepContext } from "./LecturerProvider";
 import { useLecturerForm } from "./LecturerHook";
 import { isDuplicate } from '../../Utils/Helper';
@@ -39,18 +38,14 @@ function LecturerForm({ onToggleModal, formObj }) {
     let department_id = parseInt(form.department_id);
     let modForm = {...form, department_id}
 
-
       if(modForm.lecturer_id > 0){
         dispatch({ type: XPCrudType.byType(XPCrudType.Update), lecturer: modForm }); 
-        alertObj.message = "Lecturer was updated successfully";
-        alertObj.title = "Lecturer updated successfully";
-        alertObj.callback = onToggleModal;
+        testThis(alertObj, "Lecturer was edited successfully", "Lecturer was edited", onToggleModal());
         XPInfoAlert(alertObj)
       } else{
         modForm.lecturer_id = lecturer.length + 1;
         dispatch({ type: XPCrudType.byType(XPCrudType.Add), lecturer: modForm });   
-        alertObj.message = "Lecturer was Added Successfully";
-        alertObj.title = "Lecturer Added";
+        testThis(alertObj, "Lecturer was added successfully", "Lecturer was added");
         XPInfoAlert(alertObj)
       }
 

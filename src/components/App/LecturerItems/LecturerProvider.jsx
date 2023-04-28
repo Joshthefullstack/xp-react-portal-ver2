@@ -31,21 +31,21 @@ function lecturerReducer(lecturers, action){
     const retVal = isDuplicate.isLecturerDuplicate(lecturer, lecturers)
     switch(action.type){
         case XPCrudType.byType(XPCrudType.Add):
-            if(!retVal.status) return lecturers;
+            if(retVal.status) return lecturers;
             return [...lecturers, lecturer]
         case XPCrudType.byType(XPCrudType.Update):
-            if(!retVal.status) return lecturers;
+            if(retVal.status) return lecturers;
             const index = lecturers.findIndex((m) => m.lecturer_id === lecturer.lecturer_id);
             if(index !== -1){
                 lecturers[index] = lecturer;
             }
             return [...lecturers]
         case XPCrudType.byType(XPCrudType.Delete):
-            if(!retVal.status) return lecturers;
+            if(retVal.status) return lecturers;
             lecturers = lecturers.filter((m)=> m.lecturer_id !== lecturer.lecturer_id);
             return [...lecturers];
-        default:
-            throw new Error();
+        default: 
+            return lecturers;
     }
 }
 

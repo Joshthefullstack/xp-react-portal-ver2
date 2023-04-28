@@ -44,3 +44,9 @@ export const XPDeleteSuccessObj = (alertObj) => {
     }
   })
 }
+
+export const testThis = (alertObj, message, title, callback) =>  {
+  alertObj.message = message;
+  alertObj.title = title;
+  alertObj.callback = callback;
+}

@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { Form, Button } from "react-bootstrap";
-import { XPAlertObj, XPInfoAlert } from "../../../utils/Common/xpAlerts";
+import { XPAlertObj, XPInfoAlert, testThis } from "../../../utils/Common/xpAlerts";
 import { XPCrudType } from "../../../utils/Common/Enums/alertEnums";
 import { courseformInit } from '../../../services/App/ListData/stationList';
-import {  isCourseDuplicate } from "../../../services/App/ListData/stationList";
 import { useCourseContext, useCourseDispatchContext, useDepContext } from "./CourseProvider";
 import { useCourseForm } from "./CourseHook";
 import { isDuplicate } from '../../Utils/Helper';
@@ -47,25 +46,16 @@ function CourseOfStudyForm({ onToggleModal, formObj }) {
 
     let modForm = {...form, course_units, department_id, course_level, course_semester};
 
-    try{
-
       if(modForm.course_id > 0){
         dispatch({ type: XPCrudType.byType(XPCrudType.Update), course: modForm }); 
-        alertObj.message = "Course was updated successfully";
-        alertObj.title = "Course updated successfully";
-        alertObj.callback = onToggleModal;
+        testThis(alertObj, "Course was edited successfully", "Course was edited", onToggleModal());
         XPInfoAlert(alertObj)
       } else{
         modForm.course_id = course.length + 1;
         dispatch({ type: XPCrudType.byType(XPCrudType.Add), course: modForm });   
-        alertObj.message = "Course was Added Successfully";
-        alertObj.title = "Course Added";
+        testThis(alertObj, "Course was added successfully", "Course was added");
         XPInfoAlert(alertObj)
       }
-    } catch(error){
-      console.log(error)
-    }
-
     initForm(courseformInit);
   }
 

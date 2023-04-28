@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { Form, Button } from "react-bootstrap";
-import { XPAlertObj, XPInfoAlert } from "../../../utils/Common/xpAlerts";
+import { XPAlertObj, XPInfoAlert, testThis } from "../../../utils/Common/xpAlerts";
 import { XPCrudType } from "../../../utils/Common/Enums/alertEnums";
 import { cosformInit } from '../../../services/App/ListData/stationList';
-import {  isCourseOfStudyDuplicate } from "../../../services/App/ListData/stationList";
 import { useCosContext, useCosDispatchContext, useDepContext } from "./CourseOfStudyProvider";
 import { useCourseOfStudyForm } from "./CourseOfStudyHook";
 import { isDuplicate } from '../../Utils/Helper';
@@ -11,7 +10,7 @@ import { isDuplicate } from '../../Utils/Helper';
 
 function CourseOfStudyForm({ onToggleModal, formObj }) {
   let [duplicateError, setDuplicateError] = useState("");
-  const { form, setForm, handleValueChange, errors, setErrors, validateForm, initForm } = useCourseOfStudyForm({ formObj });
+  const { form, handleValueChange, errors, setErrors, validateForm, initForm } = useCourseOfStudyForm({ formObj });
   const DURATION = [4, 5, 6, 7];
 
   const dispatch = useCosDispatchContext();
@@ -45,15 +44,17 @@ function CourseOfStudyForm({ onToggleModal, formObj }) {
 
       if(modForm.courseofstudy_id > 0){
         dispatch({ type: XPCrudType.byType(XPCrudType.Update), cos: modForm }); 
-        alertObj.message = "Course of Study was updated successfully";
-        alertObj.title = "Course of study updated successfully";
-        alertObj.callback = onToggleModal;
+        // alertObj.message = "Course of Study was updated successfully";
+        // alertObj.title = "Course of study updated successfully";
+        // alertObj.callback = onToggleModal;
+        testThis(alertObj, "Course of Study was edited successfully", "Course of Study was edited", onToggleModal());
         XPInfoAlert(alertObj)
       } else{
         modForm.courseofstudy_id = cos.length + 1;
         dispatch({ type: XPCrudType.byType(XPCrudType.Add), cos: modForm });   
-        alertObj.message = "Course of study was Added Successfully";
-        alertObj.title = "Course of study Added";
+        // alertObj.message = "Course of study was Added Successfully";
+        // alertObj.title = "Course of study Added";
+        testThis(alertObj, "Course of Study was added successfully", "Course of Study was added");
         XPInfoAlert(alertObj)
       }
 

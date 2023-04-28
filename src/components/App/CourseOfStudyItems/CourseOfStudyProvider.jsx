@@ -31,17 +31,17 @@ function courseOfStudyReducer(cos, action){
     const retVal  = isDuplicate.isCourseOfStudyDuplicate(courseOfStudy, cos)
     switch(action.type){
         case XPCrudType.byType(XPCrudType.Add):
-            if(!retVal.status) return cos;
+            if(retVal.status) return cos;
             return [...cos, courseOfStudy]
         case XPCrudType.byType(XPCrudType.Update):
-            if(!retVal.status) return cos;
+            if(retVal.status) return cos;
             const index = cos.findIndex((m) => m.courseofstudy_id === courseOfStudy.courseofstudy_id);
             if(index !== -1){
                 cos[index] = courseOfStudy;
             }
             return [...cos]
         case XPCrudType.byType(XPCrudType.Delete):
-            if(!retVal.status) return cos;
+            if(retVal.status) return cos;
             cos = cos.filter((m)=> m.courseofstudy_id !== courseOfStudy.courseofstudy_id);
             return [...cos];
         default:

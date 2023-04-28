@@ -29,12 +29,12 @@ function facultyReducer(facs, action) {
     switch (action.type) {
         case XPCrudType.byType(XPCrudType.Add): {
             // validate fas
-            if (!retVal.status) return facs
+            if (retVal.status) return facs
             return [...facs, faculty]
         }
         case XPCrudType.byType(XPCrudType.Update): {
             // validate fac
-            if (!retVal.status) return facs
+            if (retVal.status) return facs
             const index = facs.findIndex((m) => m.faculty_id === faculty.faculty_id);
             if (index !== -1) {
                 facs[index] = faculty;
@@ -43,7 +43,7 @@ function facultyReducer(facs, action) {
         }
         case XPCrudType.byType(XPCrudType.Delete):
             // validate facs
-            if (!retVal.status) return facs
+            if (retVal.status) return facs
             facs = facs.filter((m) => m.faculty_id !== faculty.faculty_id);
             return [...facs];
         default:
