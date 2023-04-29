@@ -45,8 +45,8 @@ export const XPDeleteSuccessObj = (alertObj) => {
   })
 }
 
-export const testThis = (alertObj, message, title, callback) =>  {
-  alertObj.message = message;
-  alertObj.title = title;
+export const testThis = (alertObj, item, action, callback) =>  {
+  alertObj.message = item + " was " + action + " successfully" ;
+  alertObj.title = item + " was " + action;
   alertObj.callback = callback;
 }

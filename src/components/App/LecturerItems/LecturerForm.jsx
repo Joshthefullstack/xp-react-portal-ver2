@@ -10,7 +10,7 @@ import { isDuplicate } from '../../Utils/Helper';
 
 function LecturerForm({ onToggleModal, formObj }) {
   let [duplicateError, setDuplicateError] = useState("");
-  const { form, setForm, handleValueChange, errors, setErrors, validateForm, initForm } = useLecturerForm({ formObj });
+  const { form, handleValueChange, errors, setErrors, validateForm, initForm } = useLecturerForm({ formObj });
 
   const dispatch = useLecturerDispatchContext();
   const deps = useDepContext();
@@ -40,12 +40,12 @@ function LecturerForm({ onToggleModal, formObj }) {
 
       if(modForm.lecturer_id > 0){
         dispatch({ type: XPCrudType.byType(XPCrudType.Update), lecturer: modForm }); 
-        testThis(alertObj, "Lecturer was edited successfully", "Lecturer was edited", onToggleModal());
+        testThis(alertObj, "Lecturer", "edited", onToggleModal());
         XPInfoAlert(alertObj)
       } else{
         modForm.lecturer_id = lecturer.length + 1;
         dispatch({ type: XPCrudType.byType(XPCrudType.Add), lecturer: modForm });   
-        testThis(alertObj, "Lecturer was added successfully", "Lecturer was added");
+        testThis(alertObj, "Lecturer", "added");
         XPInfoAlert(alertObj)
       }
 

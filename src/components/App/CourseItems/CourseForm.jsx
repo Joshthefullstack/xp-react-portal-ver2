@@ -48,12 +48,12 @@ function CourseOfStudyForm({ onToggleModal, formObj }) {
 
       if(modForm.course_id > 0){
         dispatch({ type: XPCrudType.byType(XPCrudType.Update), course: modForm }); 
-        testThis(alertObj, "Course was edited successfully", "Course was edited", onToggleModal());
+        testThis(alertObj, "Course", "edited", onToggleModal());
         XPInfoAlert(alertObj)
       } else{
         modForm.course_id = course.length + 1;
         dispatch({ type: XPCrudType.byType(XPCrudType.Add), course: modForm });   
-        testThis(alertObj, "Course was added successfully", "Course was added");
+        testThis(alertObj, "Course", "added");
         XPInfoAlert(alertObj)
       }
     initForm(courseformInit);

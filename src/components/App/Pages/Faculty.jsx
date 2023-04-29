@@ -10,6 +10,7 @@ function Faculty() {
     const {show, toggleShow: onToggleModal} = useXPModal();
     const [modalTitle, setModalTitle] = useState("");
     const [form, setForm] = useState(formInit);
+    
 
     const onRequestModal = (faculty) => {
         setModalTitle(faculty ? "Update Faculty" : "Add Faculty");

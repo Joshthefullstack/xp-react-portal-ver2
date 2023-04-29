@@ -3,7 +3,6 @@ import { Form, Button } from "react-bootstrap";
 import { XPAlertObj, XPInfoAlert, testThis } from "../../../utils/Common/xpAlerts";
 import { XPCrudType } from "../../../utils/Common/Enums/alertEnums";
 import { depsformInit } from '../../../services/App/ListData/stationList';
-import {  isDepartmentDuplicate } from "../../../services/App/ListData/stationList";
 import { useDepDispatchContext, useFacContext } from "./DepartmentProvider";
 import { useDepContext } from "./DepartmentProvider";
 import { useDepartmentForm } from "./DepartmentHook";
@@ -11,7 +10,7 @@ import { isDuplicate } from '../../Utils/Helper';
 
 function DepartmentForm({ onToggleModal, formObj }) {
   let [duplicateError, setDuplicateError] = useState("");
-  const { form, setForm, handleValueChange, errors, setErrors, validateForm, initForm } = useDepartmentForm({ formObj });
+  const { form, handleValueChange, errors, setErrors, validateForm, initForm } = useDepartmentForm({ formObj });
 
   const dispatch = useDepDispatchContext();
   const deps = useDepContext();
@@ -42,12 +41,12 @@ function DepartmentForm({ onToggleModal, formObj }) {
   
       if(modForm.department_id > 0){
         dispatch({ type: XPCrudType.byType(XPCrudType.Update), dep: modForm }); 
-        testThis(alertObj, "Department was edited successfully", "Department was edited", onToggleModal())
+        testThis(alertObj, "Department", "edited", onToggleModal())
         XPInfoAlert(alertObj)
       } else{
         modForm.department_id = deps.length + 1;
         dispatch({ type: XPCrudType.byType(XPCrudType.Add), dep: modForm });   
-        testThis(alertObj, "Department was added successfully", "Department was added");
+        testThis(alertObj, "Department", "added")
         XPInfoAlert(alertObj)
       }
       

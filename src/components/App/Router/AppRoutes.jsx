@@ -4,7 +4,8 @@ import Faculty from "../Pages/Faculty";
 import Department from "../Pages/Department"
 import CourseOfStudy from "../Pages/CourseOfStudy";
 import Course from "../Pages/Course";
-import Lecturer from "../Pages/Lecturer"
+import Lecturer from "../Pages/Lecturer";
+
 
 function AppRoutes() {
   return (

@@ -58,7 +58,6 @@ function FacultyTable({ onRequestModal }) {
 
   return (
     <Table striped bordered hover>
-        {/* {console.log("faculty table has rendered!")} */}
         <thead>{getGridHeader()}</thead>
         <tbody>
           {getGridData({ onDeleteClick, onRequestModal, facs })}

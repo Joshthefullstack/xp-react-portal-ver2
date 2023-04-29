@@ -15,8 +15,6 @@ export const FacultyForm = ({ onToggleModal, formObj }) => {
 
   const dispatch = useFacDispatchContext();
   const facs = useFacContext();
-
-  // dispatch({type: "Add"})
   
   const onSubmitForm = (e) => {
     e.preventDefault();
@@ -36,16 +34,15 @@ export const FacultyForm = ({ onToggleModal, formObj }) => {
       return false;
     }
 
-
       if(form.faculty_id > 0){
         dispatch({ type: XPCrudType.byType(XPCrudType.Update), fac: form }); 
-        testThis(alertObj, "Faculty was edited successfully", "Faculty was edited", onToggleModal())
-        XPInfoAlert(alertObj)
+        testThis(alertObj, "Faculty", "edited", onToggleModal())
+        XPInfoAlert(alertObj);
       } else{
         form.faculty_id = facs.length + 1;
         dispatch({ type: XPCrudType.byType(XPCrudType.Add), fac: form });
-        testThis(alertObj, "Faculty was added successfully", "Faculty was added")
-        XPInfoAlert(alertObj)
+        testThis(alertObj, "Faculty", "added")
+        XPInfoAlert(alertObj);
       }
       
     initForm(formInit);

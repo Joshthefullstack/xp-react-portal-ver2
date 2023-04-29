@@ -17,7 +17,6 @@ function CourseOfStudyForm({ onToggleModal, formObj }) {
   const deps = useDepContext();
   const cos = useCosContext();
 
-
   const onSubmitForm = (e) => {
     e.preventDefault();
     const alertObj = XPAlertObj();
@@ -44,17 +43,12 @@ function CourseOfStudyForm({ onToggleModal, formObj }) {
 
       if(modForm.courseofstudy_id > 0){
         dispatch({ type: XPCrudType.byType(XPCrudType.Update), cos: modForm }); 
-        // alertObj.message = "Course of Study was updated successfully";
-        // alertObj.title = "Course of study updated successfully";
-        // alertObj.callback = onToggleModal;
-        testThis(alertObj, "Course of Study was edited successfully", "Course of Study was edited", onToggleModal());
+        testThis(alertObj, "Course of Study", "edited", onToggleModal());
         XPInfoAlert(alertObj)
       } else{
         modForm.courseofstudy_id = cos.length + 1;
         dispatch({ type: XPCrudType.byType(XPCrudType.Add), cos: modForm });   
-        // alertObj.message = "Course of study was Added Successfully";
-        // alertObj.title = "Course of study Added";
-        testThis(alertObj, "Course of Study was added successfully", "Course of Study was added");
+        testThis(alertObj, "Course of Study", "added");
         XPInfoAlert(alertObj)
       }
 
