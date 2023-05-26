@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useCallback } from 'react'
 import FacultyTable from "../FacultyItems/FacultyTable";
 import FacultyGrid from "../FacultyItems/FacultyGrid";
 import { FacultyForm }  from '../FacultyItems/FacultyForm';
@@ -11,12 +11,11 @@ function Faculty() {
     const [modalTitle, setModalTitle] = useState("");
     const [form, setForm] = useState(formInit);
     
-
-    const onRequestModal = (faculty) => {
-        setModalTitle(faculty ? "Update Faculty" : "Add Faculty");
-        setForm(faculty ? faculty : formInit);
-        onToggleModal();
-    }
+    const onRequestModal = useCallback((faculty) => {
+      setModalTitle(faculty ? "Update Faculty" : "Add Faculty");
+      setForm(faculty ? faculty : formInit);
+      onToggleModal();
+  }, [onToggleModal]);
 
   return (
     <FacultyProvider>

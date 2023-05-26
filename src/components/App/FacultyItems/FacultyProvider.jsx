@@ -1,4 +1,4 @@
-import { createContext, useReducer, useContext } from "react";
+import { createContext, useReducer, useContext, useCallback } from "react";
 import { getAllFaculties } from "../../../services/App/ListData/stationList";
 import { XPCrudType } from "../../../utils/Common/Enums/alertEnums";
 import { isDuplicate } from "../../Utils/Helper";
@@ -9,8 +9,14 @@ const FacDispatchContext = createContext(null);
 const FacultyProvider = ({ children }) => {
     const [facs, dispatch] = useReducer(facultyReducer, getAllFaculties());
 
+    const sayHello = useCallback(()=>{
+            console.log(facs.length);
+    },[facs]) 
+
+    const values = {facs, sayHello}
+
     return (
-        <FacContext.Provider value={facs}>
+        <FacContext.Provider value={values}>
             <FacDispatchContext.Provider value={dispatch}>
                 {children}
             </FacDispatchContext.Provider>
@@ -20,7 +26,6 @@ const FacultyProvider = ({ children }) => {
 
 export const action = {
     type: "",
-
 }
 
 function facultyReducer(facs, action) {
@@ -50,6 +55,14 @@ function facultyReducer(facs, action) {
             return facs
     }
 }
+
+// Don't put a useState in your reducer
+// Let your reducer be straight to the point
+// Don't put loops and unneccessary function in your reducer
+
+// React has three parts, state(source of truth), action(functions that does something) and view(UI of the page)
+// The essentials, Redux is a pattern and a library for managing and updating an application 
+
 
 export const useFacContext = () => useContext(FacContext);
 export const useFacDispatchContext = () => useContext(FacDispatchContext)

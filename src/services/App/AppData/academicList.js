@@ -1,4 +1,4 @@
-export let Faculties = [
+export const Faculties = [
   {
     faculty_id: 1,
     faculty_name: "Faculty of Management Sciences",

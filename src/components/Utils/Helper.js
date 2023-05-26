@@ -1,27 +1,26 @@
-
+// change to checkDuplicate
 export class isDuplicate {
-     static isFacultyDuplicate(faculty, Faculties){
+     static isFacultyDuplicate(faculties, faculty){
         let error = "";
         let item = "";
-        const dupName = Faculties.filter((f)=>f.faculty_name.toLowerCase() === faculty.faculty_name.toLowerCase());
-    
-        if((faculty.faculty_id === 0 && dupName.length > 0) || (faculty.faculty_id > 0 && dupName.length > 1)){
+        const dupName = faculties.filter((f)=>f.faculty_name.trim().toLowerCase() === faculty.faculty_name.trim().toLowerCase());
+        if((dupName.length > 0)){
             error = `Faculty: ${faculty.faculty_name} already exists`;
             item = "name";
             return { status: true, error, item };
         }
     
-        const dupCode = Faculties.filter((f) => f.faculty_code.toLowerCase() === faculty.faculty_code.toLowerCase())
+        const dupCode = faculties.filter((f) => f.faculty_code.trim().toLowerCase() === faculty.faculty_code.toLowerCase())
         
-        if((faculty.faculty_id === 0 && dupCode.length > 0) || (faculty.faculty_id > 0 && dupCode.length > 1)){
+        if(dupCode.length > 0){
             error = `Faculty Code: ${faculty.faculty_code} already exists`;
             item = "code";
             return { status: true, error, item };
         }
 
-        const dupUniqueId = Faculties.filter((f) => f.faculty_uniqueid.toLowerCase() === faculty.faculty_uniqueid.toLowerCase());
+        const dupUniqueIds = faculties.filter((f) => f.faculty_uniqueid.toLowerCase() === faculty.faculty_uniqueid.toLowerCase());
 
-        if((faculty.faculty_id === 0 && dupUniqueId.length > 0) || (faculty.faculty_uniqueid > 0 && dupUniqueId.length > 1)){
+        if(dupUniqueIds > 0){
             error = `Faculty Unique Id: ${faculty.faculty_uniqueid} already exists`;
             item = "uniqueid";
             return { status: true, error, item };

@@ -1,21 +1,21 @@
-import { React, useState } from "react";
+import { React } from "react";
 import { Form, Button } from "react-bootstrap";
 import { XPAlertObj, XPInfoAlert, testThis } from "../../../utils/Common/xpAlerts";
-import { XPCrudType } from "../../../utils/Common/Enums/alertEnums";
 import { formInit } from '../../../services/App/ListData/stationList';
-import { useFacDispatchContext } from "./FacultyProvider";
-import { useFacContext } from "./FacultyProvider";
 import { useFacultyForm } from "./FacultyHook";
-import { isDuplicate } from "../../Utils/Helper";
+import { useDispatch, useSelector } from "react-redux";
+import { addFaculty, editFaculty } from "../../../store/reducers/facultySlice";
+import { getStoreFaculties, isFacultyValid } from "../../../store/reducers/selectors";
+import { useFacultyController } from "../../../controllers/FacultyController";
 
 
 export const FacultyForm = ({ onToggleModal, formObj }) => {
-  let [duplicateError, setDuplicateError] = useState("");
   const { form, handleValueChange, errors, setErrors, validateForm, initForm } = useFacultyForm({ formObj });
 
-  const dispatch = useFacDispatchContext();
-  const facs = useFacContext();
-  
+  const isValid = useSelector(isFacultyValid);
+  const faculties = useSelector(getStoreFaculties);
+  const { getAddFaculty, getEditFaculty } = useFacultyController(form);
+
   const onSubmitForm = (e) => {
     e.preventDefault();
     const alertObj = XPAlertObj();
@@ -28,19 +28,23 @@ export const FacultyForm = ({ onToggleModal, formObj }) => {
       return false;
     }
 
-    const dupValue = isDuplicate.isFacultyDuplicate(form, facs);
-    if(dupValue.status){
-      setDuplicateError(dupValue.error);
-      return false;
-    }
+
+  //   if(!isValid) {
+  //     alertObj.icon = "warning";
+  //     testThis(alertObj, "Duplucate Entry", "detected", onToggleModal());
+  //     XPInfoAlert(alertObj)
+  //     return;
+  // }
 
       if(form.faculty_id > 0){
-        dispatch({ type: XPCrudType.byType(XPCrudType.Update), fac: form }); 
+        getEditFaculty(form)
+        // dispatch(editFaculty(form)); 
         testThis(alertObj, "Faculty", "edited", onToggleModal())
         XPInfoAlert(alertObj);
       } else{
-        form.faculty_id = facs.length + 1;
-        dispatch({ type: XPCrudType.byType(XPCrudType.Add), fac: form });
+        form.faculty_id = faculties.length + 1;
+        getAddFaculty(form)
+        // dispatch(addFaculty(form));
         testThis(alertObj, "Faculty", "added")
         XPInfoAlert(alertObj);
       }
@@ -50,7 +54,7 @@ export const FacultyForm = ({ onToggleModal, formObj }) => {
 
   return (
     <Form>
-      <p>{duplicateError}</p>
+      {console.log("Form has rendered")}
       <input
         type="hidden"
         id="faculty_id"

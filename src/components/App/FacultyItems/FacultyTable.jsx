@@ -1,11 +1,12 @@
 import React from 'react';
 import { Table, Button } from 'react-bootstrap';
-import { XPCrudType } from '../../../utils/Common/Enums/alertEnums';
 import { XPAlertObj, XPDeleteSuccessObj } from '../../../utils/Common/xpAlerts';
 import { FaPen } from "react-icons/fa";
 import { FaTrash } from "react-icons/fa";
-import { useFacContext } from "./FacultyProvider";
-import { useFacDispatchContext } from "./FacultyProvider";
+import { useDispatch, useSelector } from "react-redux";
+import { deleteFaculty } from '../../../store/reducers/facultySlice';
+import { getStoreFaculties } from '../../../store/reducers/selectors';
+import { useFacultyController } from '../../../controllers/FacultyController';
 
 
 const getGridHeader = () => {
@@ -21,8 +22,8 @@ const getGridHeader = () => {
     );
 };
 
-const getGridData = ({ onDeleteClick, onRequestModal, facs }) => {
-  return facs.map((faculty, index)=>{
+const getGridData = ({ onDeleteClick, onRequestModal, faculties }) => {
+  return faculties.map((faculty, index)=>{
     return (
       <tr key={faculty.faculty_id}>
         <td>{index + 1}</td>
@@ -40,10 +41,13 @@ const getGridData = ({ onDeleteClick, onRequestModal, facs }) => {
 }
 
 function FacultyTable({ onRequestModal }) {
-  const dispatch = useFacDispatchContext();
-  const facs = useFacContext();
+  const dispatch = useDispatch();
+  const faculties = useSelector(getStoreFaculties);
+  const { getDeleteFaculty } = useFacultyController();
+  
 
   const onDeleteClick = (faculty) => {
+    
     const alertObj = XPAlertObj();
     alertObj.icon = "warning";
     alertObj.message = `Faculty Item: ${faculty.faculty_name} would be deleted! Are you sure?`;
@@ -53,14 +57,15 @@ function FacultyTable({ onRequestModal }) {
   }
 
   const processDelete = (faculty) => {
-    dispatch({ type: XPCrudType.byType(XPCrudType.Delete), fac: faculty })
+    getDeleteFaculty(faculty)
   };
 
   return (
     <Table striped bordered hover>
+      {console.log("Table has rendered")}
         <thead>{getGridHeader()}</thead>
         <tbody>
-          {getGridData({ onDeleteClick, onRequestModal, facs })}
+          {getGridData({ onDeleteClick, onRequestModal, faculties })}
         </tbody>
     </Table>
   )
